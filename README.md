@@ -2,6 +2,40 @@
 
 This project provides a Python script to fetch and print weather forecasts for a specified city using the WeatherAPI. Additionally, it includes a metamorphic test to check the consistency of weather forecasts for nearby cities.
 
+## Table of Contents
+
+- [Features](#features)
+- [Setup](#setup)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Fetch Weather Forecast](#fetch-weather-forecast)
+  - [Run the main script](#run-the-main-script)
+  - [Run Metamorphic Testing](#run-metamorphic-testing)
+- [Explanation of the Metamorphic Test](#explanation-of-the-metamorphic-test)
+  - [Definition of Nearby Cities](#definition-of-nearby-cities)
+  - [Obtain forecasts](#obtaining-forecasts)
+  - [Consistency Check](#consistency-check)
+- [Example Output](#example-output)
+  - [Weather Forecast](#weather-forecast)
+  - [Metamorphic Test](#metamorphic-test)
+
+## Tabela de Conteúdos [Portuguese]
+
+- [Características](#características)
+- [Configuração](#configuração)
+  - [Instalação](#instalação)
+- [Uso](#uso)
+  - [Obter Previsão do Tempo](#obter-previsão-do-tempo)
+  - [Execução do script principal](#execução-do-script-principal)
+  - [Execução do Teste Metamórfico](#execução-do-teste-metamórfico)
+- [Explicação do Teste Metamórfico](#explicação-do-teste-metamórfico)
+  - [Definição de Cidades Próximas](#definição-de-cidades-próximas)
+  - [Obtenção das previsões](#obtenção-das-previsões)
+  - [Verificação de Consistência](#verificação-de-consistência)
+- [Exemplo de Saída](#exemplo-de-saída)
+  - [Previsão do Tempo](#previsão-do-tempo)
+  - [Teste Metamórfico](#teste-metamórfico)
+
 ## Features
 
 - Fetches weather forecast for a specified city using WeatherAPI.
@@ -12,7 +46,6 @@ This project provides a Python script to fetch and print weather forecasts for a
 
 **Prerequisites**
 - Python 3.x
-- `requests` library
 
 ### Installation
 1. Clone the repository:
@@ -21,7 +54,7 @@ git https://github.com/gabrielsants/weather-metamorphic-testing.git
 cd weather-metamorphic-testing
 ````
 
-2. Install the required library:
+2. Install the library `requests` with the prompt::
 
 `````
 pip install requests
@@ -74,6 +107,84 @@ Date: 2023-05-22, Average Temperature: 21.5°C, Condition: Rain
 ````
 
 ### Metamorphic Test
+`````
+Inconsistency detected in temperatures for day 2: [22.5, 23.0, 21.5]
+Inconsistency detected in conditions for day 2: ['Partly cloudy', 'Sunny', 'Rain']
+Metamorphic test failed: Inconsistencies found in weather forecasts between nearby cities.
+`````
+
+
+## Características
+
+- Busca a previsão do tempo para uma cidade especificada usando a WeatherAPI.
+- Imprime os detalhes da previsão do tempo, incluindo data, temperatura média e condição.
+- Realiza um teste metamórfico para verificar a consistência das previsões entre cidades próximas.
+
+## Configuração
+
+**Pré-requisitos**
+- Python 3.x
+
+### Instalação
+1. Clone o repositório:
+````
+git https://github.com/gabrielsants/weather-metamorphic-testing.git
+cd weather-metamorphic-testing
+````
+
+2. Instale a biblioteca `requests` com o comando:
+
+`````
+pip install requests
+`````
+
+3. Obtenha sua chave da API em [WeatherAPI](https://www.weatherapi.com/) e salve-a no arquivo api_key.txt.
+
+## Uso
+### Obter Previsão do Tempo
+1. Edite `weather_forecast.py` para especificar sua cidade:
+
+`````
+city = "São Paulo"
+`````
+
+### Execução do script principal:
+`````
+python weather_forecast.py
+`````
+
+### Execução do Teste Metamórfico:
+`````
+python test_metamorphic_weather_forecast.py
+`````
+
+## Explicação do Teste Metamórfico
+
+### Definição de Cidades Próximas:
+Selecionamos um conjunto de cidades próximas (São Paulo, Guarulhos e Osasco) para verificar a consistência das previsões.
+
+### Obtenção das previsões:
+Para cada cidade, obtemos a previsão do tempo para os próximos 3 dias usando a função `get_weather_forecast`.
+
+### Verificação de Consistência:
+1. Para cada dia da previsão, comparamos as temperaturas médias entre as cidades.
+2. Se a diferença de temperatura entre as cidades for maior que um limite arbitrário (por exemplo, 2°C), relatamos uma inconsistência.
+3. Também verificamos se as condições meteorológicas (descrições de texto) são consistentes entre as cidades. Se houver mais de uma condição diferente para o mesmo dia, relatamos uma inconsistência.
+4. Usamos a variável `all_consistent`  para acompanhar se todas as previsões foram consistentes.
+
+
+Após verificar todos os dias de previsão, imprimimos uma mensagem indicando se o teste foi aprovado (previsões consistentes) ou reprovado (inconsistências encontradas).
+
+## Exemplo de Saída
+### Previsão do Tempo
+````
+Weather forecast for São Paulo:
+Date: 2023-05-20, Average Temperature: 22.5°C, Condition: Partly cloudy
+Date: 2023-05-21, Average Temperature: 23.0°C, Condition: Sunny
+Date: 2023-05-22, Average Temperature: 21.5°C, Condition: Rain
+````
+
+### Teste Metamórfico
 `````
 Inconsistency detected in temperatures for day 2: [22.5, 23.0, 21.5]
 Inconsistency detected in conditions for day 2: ['Partly cloudy', 'Sunny', 'Rain']
